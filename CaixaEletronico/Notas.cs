@@ -8,16 +8,32 @@ namespace CaixaEletronico
 {
     class Notas
     {
-        public int Nota10 { get; private set; }
-        public int Nota20 { get; private set; }
-        public int Nota50 { get; private set; }
-        public int Nota100 { get; private set; }
+        private int Nota10;
+        private int Nota20;
+        private int Nota50;
+        private int Nota100;
 
         public Notas()
         {
 
         }
 
-        
+        public int ContaNota10()
+        {
+            return Nota10 += 1;
+        }
+        public int ContaNota20()
+        {
+            return Nota20 += 1;
+        }
+        public int ContaNota50()
+        {
+            return Nota50 += 1;
+        }
+        public int ContaNota100()
+        {
+            return Nota100 += 1;
+        }
     }
+
 }

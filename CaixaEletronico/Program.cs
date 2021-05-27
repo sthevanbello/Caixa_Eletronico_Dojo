@@ -6,7 +6,16 @@ namespace CaixaEletronico
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Cliente cliente = new Cliente();
+
+
+
+            Console.WriteLine("Insira um valor para realizar o saque");
+            double valor = double.Parse(Console.ReadLine());
+
+            cliente.Sacar(valor);
+
+            Console.ReadLine();
         }
     }
 }
