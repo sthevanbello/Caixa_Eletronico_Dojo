@@ -37,7 +37,7 @@ namespace CaixaEletronico
 
         private void VerificaNotas(double valor)
         {
-            
+
 
             if (!VerificaSaqueValido(valor))
             {
@@ -62,7 +62,7 @@ namespace CaixaEletronico
                     notas20 = notas.ContaNota20();
                     valor -= 20.00;
                 }
-                else if(valor >= 10 && valor < 20)
+                else if (valor >= 10 && valor < 20)
                 {
                     notas10 = notas.ContaNota10();
                     valor -= 10.00;
@@ -72,12 +72,12 @@ namespace CaixaEletronico
 
         }
 
-       
+
         private void ImprimeListaDeNotas()
         {
             stringBuilder.Append("Entregar ");
 
-            
+
             if (notas100 == 1)
             {
                 stringBuilder.Append($"{notas100} nota de R$100,00 ");
@@ -125,9 +125,17 @@ namespace CaixaEletronico
 
         public void RealizaSaque(double valor)
         {
+                try
+                {
+                    VerificaNotas(valor);
+                    ImprimeListaDeNotas();
 
-            VerificaNotas(valor);
-            ImprimeListaDeNotas();
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+
+                } 
 
         }
     }
