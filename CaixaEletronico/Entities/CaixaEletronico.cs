@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CaixaEletronico.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,19 +10,23 @@ namespace CaixaEletronico
     class CaixaEletronico
     {
         private readonly Notas notas;
-        public StringBuilder stringBuilder;
+        private readonly Print imprimir;
+        //public StringBuilder stringBuilder;
         int notas100;
         int notas50;
         int notas20;
         int notas10;
+        double valorNoCaixa;
         public CaixaEletronico()
         {
             notas = new Notas();
-            stringBuilder = new StringBuilder();
+            imprimir = new Print();
+            //stringBuilder = new StringBuilder();
             notas100 = 0;
             notas50 = 0;
             notas20 = 0;
             notas10 = 0;
+            valorNoCaixa = 1000.00;
         }
 
         private bool VerificaSaqueValido(double valor)
@@ -41,7 +46,7 @@ namespace CaixaEletronico
 
             if (!VerificaSaqueValido(valor))
             {
-                throw new ArgumentException("Valor não pôde ser sacado, pois não há cédulas correspondentes.\n Cédulas disponíveis -  R$10,00 - R$20,00 - R$50,00 e R$100,00");
+                throw new ArgumentException("Valor não pôde ser sacado, pois não há cédulas correspondentes.\nCédulas disponíveis -  R$10,00 - R$20,00 - R$50,00 e R$100,00");
             }
 
             while (valor > 0)
@@ -73,62 +78,14 @@ namespace CaixaEletronico
         }
 
 
-        private void ImprimeListaDeNotas()
-        {
-            stringBuilder.Append("Entregar ");
-
-
-            if (notas100 == 1)
-            {
-                stringBuilder.Append($"{notas100} nota de R$100,00 ");
-            }
-            if (notas100 > 1)
-            {
-                stringBuilder.Append($"{notas100} notas de R$100,00 ");
-            }
-            if (notas50 > 0)
-            {
-                if (notas20 == 0 && notas10 == 0)
-                {
-                    stringBuilder.Append("e ");
-                }
-                stringBuilder.Append($"{notas50} nota de R$50,00 ");
-            }
-            if (notas20 == 1)
-            {
-                if (notas10 == 0)
-                {
-                    stringBuilder.Append("e ");
-                }
-                stringBuilder.Append($"{notas20} nota de R$20,00 ");
-
-            }
-            if (notas20 > 1)
-            {
-                if (notas10 == 0)
-                {
-                    stringBuilder.Append("e ");
-                }
-                stringBuilder.Append($"{notas20} notas de R$20,00 ");
-            }
-            if (notas10 == 1)
-            {
-                if (stringBuilder.Length > 9)
-                {
-                    stringBuilder.Append("e ");
-                }
-                stringBuilder.Append($"{notas10} nota de R$10,00");
-            }
-
-            Console.WriteLine(stringBuilder);
-        }
-
         public void RealizaSaque(double valor)
         {
                 try
                 {
+                    
                     VerificaNotas(valor);
-                    ImprimeListaDeNotas();
+
+                    imprimir.ImprimeListaDeNotas(notas100, notas50, notas20, notas10);
 
                 }
                 catch (ArgumentException ex)
